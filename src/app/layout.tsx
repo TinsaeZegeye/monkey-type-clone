@@ -19,7 +19,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-        <body className={'antialiased font.className bg-[#2a2a2a]'} cz-shortcut-listen="true">
+        <body className={'antialiased font.className bg-[#323437]'} cz-shortcut-listen="true">
             <Header/>      
             {children}
       </body>

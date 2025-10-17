@@ -1,2 +1,11 @@
 @import "tailwindcss";
 @import "tw-animate-css";
+
+@layer components {
+    .icons-container {
+        @apply flex items-center justify-between relative p-3
+    }
+    .icons {
+        @apply text-gray-500 hover:text-gray-300 text-[20px] cursor-pointer absolute top-0 left-0 transition-colors duration-200 ease-in-out w-5 h-5
+    }
+}
