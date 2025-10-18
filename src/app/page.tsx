@@ -1,7 +1,10 @@
 import Image from "next/image";
+import ConfigurationOption from "../../components/ConfigurationOption";
 
 export default function Home() {
   return (
-    <div className="text-amber-700">Home page </div>
+	<div className=''>
+		<ConfigurationOption/>	  
+    </div>
   );
 }
