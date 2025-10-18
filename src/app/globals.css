@@ -18,4 +18,7 @@
         @apply px-2 py-1 bg-[#646669] select-none text-gray-700 rounded-md align-middle
     }
 
+    .p {
+        @apply flex items-center gap-2 text-[#646669]
+    }
 }

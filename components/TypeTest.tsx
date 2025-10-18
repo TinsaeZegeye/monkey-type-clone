@@ -58,7 +58,7 @@ export default function TypeTest() {
     }
 
   return (
-    <div className="flex flex-col items-center mx-[10%] my-8 gap-10 justify-center">
+    <div className="flex flex-col items-center mx-[10%] my-5 gap-7 justify-center">
         <input 
             ref={inputRef}
             type="text" 
@@ -73,11 +73,6 @@ export default function TypeTest() {
         </div>
 
         <RotateCcw size='40' className='config-btn text-[#646669] hover:text-[#d1d0c5]' onClick={handleRestart}/>
-
-        <div className = 'flex flex-col gap-2'>
-            <p className="text-[#646669] text-lg"> <span className='span'> ctrl </span> + <span className='span'> enter </span> - restart test</p>
-            <p className="text-[#646669] text-lg"><span className='span'> esc </span>  or  <span className='span'> ctrl </span> + <span className='span'> shift </span> + <span className='span'> p </span> - command line</p>
-        </div>
     </div>
   )
 }
