@@ -7,10 +7,10 @@ import { GiFamilyTree } from "react-icons/gi"
 
 export default function Footer() {
   return (
-    <div className='flex flex-col items-center w-full mb-0 p-2 text-sm'>
-        <div className = 'flex flex-col gap-2 mb-5'>
-                <p className="text-[#646669] text-lg"> <span className='span'> ctrl </span> + <span className='span'> enter </span> - restart test</p>
-                <p className="text-[#646669] text-lg"><span className='span'> esc </span>  or  <span className='span'> ctrl </span> + <span className='span'> shift </span> + <span className='span'> p </span> - command line</p>
+    <div className='flex flex-col items-center w-full p-2 text-sm'>
+        <div className = 'flex flex-col gap-4 mb-5'>
+                <p className="text-[#646669] text-sm whitespace-pre"> <span className='span'> tab </span>  +  <span className='span'> enter </span>  -  restart test</p>
+                <p className="text-[#646669] text-sm whitespace-pre"><span className='span'> esc </span>  or  <span className='span'> ctrl </span>  +  <span className='span'> shift </span>  +  <span className='span'> p </span>  -  command line</p>
         </div>
         <div className='flex items-center justify-between w-full p-1'>
             <div className='flex items-center p-2 gap-6 flex-wrap'>
