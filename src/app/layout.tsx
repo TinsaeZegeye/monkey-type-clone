@@ -3,6 +3,7 @@ import "./globals.css";
 import {JetBrains_Mono} from 'next/font/google'
 import Header from "../../components/Header";
 import Footer from "../../components/Footer";
+import Providers from './providers'
 
 export const metadata: Metadata = {
   title: "Monkey-Type clone",
@@ -21,9 +22,11 @@ export default function RootLayout({
   return (
     <html lang="en">
         <body className={'antialiased font.className bg-[#323437]'} cz-shortcut-listen="true">
+          <Providers>
             <Header/>      
             {children}
             <Footer/>
+          </Providers>
       </body>
     </html>
   );
