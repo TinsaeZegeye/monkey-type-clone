@@ -2,13 +2,15 @@
 
 import React, { useEffect, useRef, useState } from "react"
 import { RotateCcw } from 'lucide-react'
-
+import { useAppDispatch, useAppSelector } from "@/hooks/redux"
+import { setIsTestRunning, setTimeLeft, setIsCompleted, restartTest } from "@/lib/features/slice/testConfigSlice"
 export default function TypeTest() {
+
     const [userInput, setUserInput] = useState('')
-    const [testStarted, setTestStarted] = useState(false)
-    const [timeLeft, setTimeLeft] = useState(30)
-    const [isTestRunning, setIsTestRunning] = useState(false)
     const inputRef = useRef<HTMLInputElement>(null)
+    const config = useAppSelector((state) => state.testConfig)
+    const dispatch = useAppDispatch()
+
 
     const sampleText = "too between each also however late man they from hand group help while both any here when at for so during again people just person by one place a be fact little plan man face life well"
 
@@ -19,26 +21,55 @@ export default function TypeTest() {
     useEffect(() => {
         let interval: NodeJS.Timeout | null = null
 
-        if (isTestRunning && timeLeft > 0){
+        if (config.isTestRunning && config.timeLeft > 0){
             interval = setInterval(() => {
-                setTimeLeft((time) => time - 1);
+                dispatch(setTimeLeft(config.timeLeft - 1));
             }, 1000);
         }else {
-            setIsTestRunning(false)
+            dispatch(setIsTestRunning(false))
+            dispatch(setIsCompleted(true))
         }
 
         return () => {
             if (interval) clearInterval(interval)
         }
 
-    }, [isTestRunning, timeLeft])
+    }, [config.isTestRunning, config.timeLeft, dispatch])
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        if(!testStarted){
-            setTestStarted(true)
-            setIsTestRunning(true)
+        if(!config.isTestRunning){
+            dispatch(setIsTestRunning(true))
         }
         setUserInput(e.target.value)
+        checkTestCompletion(e.target.value)
+    }
+
+    const checkTestCompletion = (currentInput: string) => {
+        if (config.isCompleted) return 
+
+        if (config.mode === 'time' && config.timeLeft === 0){
+            dispatch(setIsCompleted(true))
+            dispatch(setIsTestRunning(false))
+            return 
+        }
+
+        if (config.mode === 'word') {
+            const wordsTyped = currentInput.trim().split(/\s+/).length
+
+            if(wordsTyped >= config.value) {
+                dispatch(setIsCompleted(true))
+                dispatch(setIsTestRunning(false))
+                return 
+            } 
+        }
+
+        if (config.mode === 'quote' && currentInput.length >= sampleText.length) {
+            dispatch(setIsCompleted(true))
+            dispatch(setIsTestRunning(false))
+            return 
+        }
+
+
     }
 
     const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
@@ -73,16 +104,19 @@ export default function TypeTest() {
 
     const handleRestart = () => {
         setUserInput('')
-        setTestStarted(false)
-        setIsTestRunning(false)
-        setTimeLeft(30)
+        dispatch(restartTest())    
         inputRef.current?.focus()
     }
 
   return (
     <div className="flex flex-col items-center mx-[10%] mb-5 gap-5 justify-center">
-        <div className={`hidden ${isTestRunning && 'inline-flex'} justify-between items-center w-full`}>
-            <div className='text-2xl font-mono text-[#e2b755]'>{timeLeft}s</div>
+        <div className={`hidden ${config.isTestRunning && 'inline-flex'} justify-between items-center w-full`}>
+            {config.mode === 'time' && (
+                <div className='text-2xl font-mono text-[#e2b755]'>{config.timeLeft}s</div>
+            )}
+            {config.mode === 'word' && (
+                <div className='text-2xl font-mono text-[#e2b755]'>1 / {config.value}s</div>
+            )}
             <div></div>
         </div>
         <input 

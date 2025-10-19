@@ -3,13 +3,14 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit"
 interface TestConfigState {
     mode: 'time' | 'word' | 'quote',
     value: number,
-    quote: 'all' | 'short' | 'medium' | 'long',
+    quote: string,
     punctuation: boolean,
     numbers: boolean, 
     language: string, 
     timeLeft: number, 
     isTestRunning: boolean, 
-    isCompleted: boolean
+    isCompleted: boolean,
+    _persist?: { version: number; rehydrated: boolean }
 }
 
 const initialState: TestConfigState = {
@@ -38,7 +39,7 @@ const testConfigSlice = createSlice({
             state.value = action.payload
             state.timeLeft = action.payload
         },
-        setQuote: (state, action: PayloadAction<'all'| 'short'| 'medium'| 'long'>) =>{
+        setQuote: (state, action: PayloadAction<string>) =>{
             state.quote = action.payload
         },
         togglePunctuation: (state) =>{
