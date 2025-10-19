@@ -20,7 +20,7 @@ export default function ConfigurationOption() {
 		language: 'english'
 	})
   return (
-	<div className = 'flex flex-col items-center mx-[15%] my-7 p-3 w-full max-w-5xl'>
+	<div className = 'flex flex-col items-center mx-[15%] my-5 p-3 w-full max-w-5xl'>
 		<div className='flex items-center justify-between bg-[#2c2e31] p-2 rounded-lg gap-10'>
 			{/* Left Side Configuration Option */}
 			<div className='flex items-center gap-4'>

@@ -6,6 +6,8 @@ import { RotateCcw } from 'lucide-react'
 export default function TypeTest() {
     const [userInput, setUserInput] = useState('')
     const [testStarted, setTestStarted] = useState(false)
+    const [timeLeft, setTimeLeft] = useState(30)
+    const [isTestRunning, setIsTestRunning] = useState(false)
     const inputRef = useRef<HTMLInputElement>(null)
 
     const sampleText = "too between each also however late man they from hand group help while both any here when at for so during again people just person by one place a be fact little plan man face life well"
@@ -14,9 +16,27 @@ export default function TypeTest() {
         inputRef.current?.focus()
     } ,[])
 
+    useEffect(() => {
+        let interval: NodeJS.Timeout | null = null
+
+        if (isTestRunning && timeLeft > 0){
+            interval = setInterval(() => {
+                setTimeLeft((time) => time - 1);
+            }, 1000);
+        }else {
+            setIsTestRunning(false)
+        }
+
+        return () => {
+            if (interval) clearInterval(interval)
+        }
+
+    }, [isTestRunning, timeLeft])
+
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         if(!testStarted){
             setTestStarted(true)
+            setIsTestRunning(true)
         }
         setUserInput(e.target.value)
     }
@@ -54,11 +74,17 @@ export default function TypeTest() {
     const handleRestart = () => {
         setUserInput('')
         setTestStarted(false)
+        setIsTestRunning(false)
+        setTimeLeft(30)
         inputRef.current?.focus()
     }
 
   return (
-    <div className="flex flex-col items-center mx-[10%] my-5 gap-7 justify-center">
+    <div className="flex flex-col items-center mx-[10%] mb-5 gap-5 justify-center">
+        <div className={`hidden ${isTestRunning && 'inline-flex'} justify-between items-center w-full`}>
+            <div className='text-2xl font-mono text-[#e2b755]'>{timeLeft}s</div>
+            <div></div>
+        </div>
         <input 
             ref={inputRef}
             type="text" 
